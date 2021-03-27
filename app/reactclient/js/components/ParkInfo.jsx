@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import ImageUploading from 'react-images-uploading'
 import {useSelector, useDispatch} from 'react-redux'
-import {closeParkInfo} from '../tools/store-slice'
+import {closeParkInfo, onImageUploaded} from '../tools/store-slice'
 import {Client} from '../tools/client'
 
 const ParkInfo = () => {
@@ -17,10 +17,11 @@ const ParkInfo = () => {
      */
      function handleUploadImage(images){
         setImages(images)
-
+        //setup form data
         let formData = new FormData()
         formData.append('image', images[0]['file'])
 
+        //setup header config
         const _config = {
             method: "POST",
             body: formData,
@@ -28,11 +29,15 @@ const ParkInfo = () => {
         }
         const _url = "api/park/upload-image/" + _park.id
 
-        window.fetch(_url, _config).then(
-            response => {
-                console.log(response)
-            }
-        )
+        //make ajax request
+        window.fetch(_url, _config)
+            .then(response => {
+                return response.json()
+            })
+            .then((data) => {
+                _dispatch(onImageUploaded({id: _park.id}))
+                setImages(null)
+            })
         
     }
 
@@ -53,7 +58,6 @@ const ParkInfo = () => {
                     </ul>
 
                     <div className="live-image">
-                        <p>{_park.live_image}</p>
                         {_park.live_image
                             ? <img src={_park.live_image} width="auto" height='100' />   
                             : <strong>NO IMAGE UOPLOADED</strong> 

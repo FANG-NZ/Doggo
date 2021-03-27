@@ -95,6 +95,26 @@ const MapDataSlice = createSlice({
 
         },
         
+
+        /**
+         * Action is to handle image uploaded
+         */
+        onImageUploaded(state, action){
+            const {id} = action.payload
+
+            //To update display data
+            const _displayIndex = state.displayData.findIndex(item => item.id === id)
+            state.displayData[_displayIndex].has_pending_image = true
+
+            //To update data
+            const _dataIndex = state.data.findIndex(item => item.id === id)
+            state.data[_dataIndex].has_pending_image = true
+
+            state.selectedPark.has_pending_image = true
+        },
+
+
+
         /**
          * Function is to open ParkInfo
          * @param {*} state 
@@ -129,5 +149,10 @@ const MapDataSlice = createSlice({
     }
 })
 
-export const {setData, onLeashChanged, openParkInfo, closeParkInfo} = MapDataSlice.actions
+export const {
+    setData, 
+    onLeashChanged, 
+    onImageUploaded,
+    openParkInfo, 
+    closeParkInfo} = MapDataSlice.actions
 export default MapDataSlice.reducer

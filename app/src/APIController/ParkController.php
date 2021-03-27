@@ -34,8 +34,8 @@ class ParkController extends Controller{
      * Function is to handle load all park data
      */
     public function doLoadAll(HTTPRequest $request){
-        $parks = Park::get()->limit(5);
-        //$parks = Park::get();
+        //$parks = Park::get()->limit(5);
+        $parks = Park::get();
 
         $data = [];
         foreach($parks as $item){
@@ -79,8 +79,7 @@ class ParkController extends Controller{
         $park = Park::get_by_id($parkID);
         $park->uploadPendingImage($image);
         
-        
-        return json_encode(['status' => 'DONE']);
+        return json_encode(['has_pending_image' => true]);
     }
 
 }
