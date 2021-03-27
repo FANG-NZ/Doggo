@@ -77,7 +77,7 @@ class FetchWCCParksTask extends BuildTask
             }
 
             $parkObject->update([
-                //'IsToPurge' => false,
+                'IsToPurge' => false,
                 'Title' => $park->properties->name,
                 'Latitude' => $geometry[0],
                 'Longitude' => $geometry[1],
@@ -88,7 +88,7 @@ class FetchWCCParksTask extends BuildTask
 
             $parkObject->write();
 
-            DB::alteration_message('[' . $parkObject->ProviderCode . '] ' . $parkObject->Title, $status);
+            DB::alteration_message('[' . $geometry[0] . ' , ' .$geometry[1] .']' . $parkObject->Title, $status);
         }
 
         $existingParks = WCCPark::get()->filter([

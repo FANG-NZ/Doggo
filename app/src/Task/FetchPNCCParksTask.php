@@ -78,6 +78,7 @@ class FetchPNCCParksTask extends BuildTask{
             }
 
             $parkObject->update([
+                'IsToPurge' => false,
                 'Title' => !empty($properties->RESERVE_NAME) ? $properties->RESERVE_NAME : "--- NG ---",
                 'Latitude' => $geometry[0],
                 'Longitude' => $geometry[1],
