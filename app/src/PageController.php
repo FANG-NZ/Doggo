@@ -35,8 +35,8 @@ namespace {
                 Requirements::javascript($liveReload);
             }
 
-            Requirements::css('app.css');
-            Requirements::javascript('app.js');
+            //Requirements::css('app.css');
+            //Requirements::javascript('app.js');
         }
 
         public function appSettings()

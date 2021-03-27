@@ -2,12 +2,13 @@
 
 namespace Doggo\Task;
 
+use Doggo\Model\WCCPark;
 use Doggo\Model\Park;
 use GuzzleHttp\Client;
 use SilverStripe\Dev\BuildTask;
 use SilverStripe\ORM\DB;
 
-class FetchParksTask extends BuildTask
+class FetchWCCParksTask extends BuildTask
 {
     private static $api_url;
 
@@ -34,7 +35,8 @@ class FetchParksTask extends BuildTask
          * As we encounter each record in the API source, we unset this.
          * Once done, any still set are deleted.
          */
-        $existingParks = Park::get()->filter('Provider', $this->config()->get('api_title'));
+        
+        $existingParks = WCCPark::get();
         foreach ($existingParks as $park) {
             $park->IsToPurge = true;
             $park->write();
@@ -44,25 +46,27 @@ class FetchParksTask extends BuildTask
 
         $parks = $data->features;
         foreach ($parks as $park) {
-            $parkObject = Park::get()->filter([
-                'Provider' => $this->config()->get('api_title'),
+
+            //If we get "Prohibited", just stop here
+            if($park->properties->On_Off === 'Prohibited')
+                continue;
+
+            $parkObject = WCCPark::get()->filter([
                 'ProviderCode' => $park->properties->GlobalID,
             ])->first();
             $status = 'changed';
 
             if (!$parkObject) {
                 $status = 'created';
-                $parkObject = Park::create();
+                $parkObject = WCCPark::create();
                 $parkObject->Provider = $this->config()->get('api_title');
                 $parkObject->ProviderCode = $park->properties->GlobalID;
             }
 
             if ($park->properties->On_Off === 'Off leash') {
-                $leash = 'Off-leash';
-            } elseif ($park->properties->On_Off === 'Prohibited') {
-                continue;
+                $leash = Park::OFF_LEASH;
             } else {
-                $leash = 'On-leash';
+                $leash = Park::ON_LEASH;
             }
 
             if ($park->geometry->type === 'MultiPolygon') {
@@ -73,7 +77,7 @@ class FetchParksTask extends BuildTask
             }
 
             $parkObject->update([
-                'IsToPurge' => false,
+                //'IsToPurge' => false,
                 'Title' => $park->properties->name,
                 'Latitude' => $geometry[0],
                 'Longitude' => $geometry[1],
@@ -87,8 +91,7 @@ class FetchParksTask extends BuildTask
             DB::alteration_message('[' . $parkObject->ProviderCode . '] ' . $parkObject->Title, $status);
         }
 
-        $existingParks = Park::get()->filter([
-            'Provider' => $this->config()->get('api_title'),
+        $existingParks = WCCPark::get()->filter([
             'IsToPurge' => true,
         ]);
         foreach ($existingParks as $park) {
