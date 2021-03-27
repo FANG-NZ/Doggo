@@ -17,7 +17,6 @@ const ParkInfo = () => {
      */
      function handleUploadImage(images){
         setImages(images)
-        console.log(images[0]['file'])
 
         let formData = new FormData()
         formData.append('image', images[0]['file'])
@@ -53,7 +52,21 @@ const ParkInfo = () => {
                         <li>{_park.leash_note}</li>
                     </ul>
 
+                    <div className="live-image">
+                        <p>{_park.live_image}</p>
+                        {_park.live_image
+                            ? <img src={_park.live_image} width="auto" height='100' />   
+                            : <strong>NO IMAGE UOPLOADED</strong> 
+                        }
+                    </div>
+
                     <div className="image-upload">
+
+                        {
+                            _park.has_pending_image &&
+                            <p className="warning">One image is waiting for approve</p>
+                        }
+
                         <ImageUploading
                             value={images}
                             multiple={false}

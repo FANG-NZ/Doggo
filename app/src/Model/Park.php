@@ -48,14 +48,6 @@ class Park extends DataObject
         'Title'
     ];
 
-    // private static $indexes = [
-    //     'Provider' => [
-    //         'columns' => ['Provider'],
-    //     ],
-    //     'ProviderCode' => [
-    //         'columns' => ['Provider', 'ProviderCode'],
-    //     ],
-    // ];
 
     private static $api_access = true;
 
@@ -90,33 +82,52 @@ class Park extends DataObject
 
 
     /**
+     * Function is to check if there ia LIVE image
+     * @return boolean
+     */
+    public function hasLiveImage(){
+        //Do we need to check $this->LiveImage() to make sure
+        //the image exists
+        if($this->LiveImageID){
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Function is to chec kif there is PENDING image 
+     * @return boolean
+     */
+    public function hasPendingImage(){
+        if($this->PendingImageID){
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
      * Function is to handle upload image into Pending Image
      */
-    // public function uploadPendingImage($imageFile){
+    public function uploadPendingImage($imageFile){
 
-    //     $pendingImage = $this->PendingImage();
+        //If pending image exists, we just clear it before we
+        //handle submit new image
+        if($this->PendingImageID){
+            $this->PendingImage()->delete();
+        }
 
-    //     //If pending image exists, we just clear it before we
-    //     //handle submit new image
-    //     if($pendingImage->ID){
-    //         $this->PendingImage()->Image()->delete();
-    //     }else{
-    //         $pendingImage = ParkImage::create([
-    //             'BelongToPark' => $this->ID
-    //         ]);
+        //init new image object
+        $image = Image::create();
+        $upload = Upload::create();
+        $upload->loadIntoFile($imageFile, $image, 'ParkImages' );
+        $image = $upload->getFile();
 
-    //         $pendingImage->write();
-    //     }
-
-    //     $image = Image::create();
-    //     $upload = Upload::create();
-    //     $upload->loadIntoFile($imageFile, $image, 'ParkImages' );
-    //     $image = $upload->getFile();
-
-    //     //To update image
-    //     $pendingImage->ImageID = $image->ID;
-    //     $pendingImage->write();
-    // }
+        //To update database reacord
+        $this->PendingImageID = $image->ID;
+        $this->write();
+    }
 
 
 

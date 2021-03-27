@@ -69,6 +69,13 @@ body{
     width: 500px;
     background-color: #fff;
 
+    .live-image{
+        margin-bottom: 20px;
+    }
+
+    .warning{
+        color: red;
+    }
 
     //define the image upload
     .image-upload{

@@ -20,7 +20,7 @@ const MapMarkers = (props) => {
             <Marker key={`marker-${index}`}  longitude={item.latlng.latitude} latitude={item.latlng.longitude}
             >
                 <img src={_img} 
-                    style={{width:'40px', height: '40px'}}
+                    style={{width:'40px', height: '40px', cursor: "pointer"}}
                     onClick={() => {
                         _dispatch(openParkInfo(item))
                     }}

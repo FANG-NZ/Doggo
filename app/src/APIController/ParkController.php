@@ -39,6 +39,7 @@ class ParkController extends Controller{
 
         $data = [];
         foreach($parks as $item){
+
             $data[] = [
                 'id' => $item->ID,
                 'title' => $item->Title,
@@ -50,7 +51,9 @@ class ParkController extends Controller{
                 'geo_json' => $item->GeoJson,
                 'is_leash_on' => $item->isLeashOn(),
                 'leash_note' => $item->FeatureOnOffLeash,
-                'provider' => $item->getProvider()
+                'provider' => $item->getProvider(),
+                'live_image' => $item->hasLiveImage() ? $item->LiveImage()->AbsoluteLink : null,
+                'has_pending_image' => $item->hasPendingImage()
             ];
         }
 

@@ -61,6 +61,12 @@ body {
   width: 500px;
   background-color: #fff;
 }
+#park-info .live-image {
+  margin-bottom: 20px;
+}
+#park-info .warning {
+  color: red;
+}
 #park-info .image-upload img, #park-info .image-upload button {
   display: block;
 }
