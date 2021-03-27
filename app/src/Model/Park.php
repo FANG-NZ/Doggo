@@ -170,7 +170,7 @@ class Park extends DataObject
         $fields->removeByName("IsToPurge");
 
         //To remove pending image field, if it is NEW record
-        if($this->ID == 0){
+        if($this->ID == 0 || !$this->hasPendingImage()){
             $fields->removeByName("PendingImage");
         }
 

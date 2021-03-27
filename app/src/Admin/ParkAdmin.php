@@ -11,6 +11,7 @@ use SilverStripe\Forms\GridField\GridFieldExportButton;
 use SilverStripe\Forms\GridField\GridFieldImportButton;
 use SilverStripe\Forms\GridField\GridFieldPrintButton;
 use SilverStripe\Forms\GridField\GridFieldAddNewButton;
+use SilverStripe\Forms\GridField\GridFieldDataColumns;
 
 class ParkAdmin extends ModelAdmin
 {
@@ -91,6 +92,26 @@ class ParkAdmin extends ModelAdmin
 
         $detailForm = $config->getComponentByType(GridFieldDetailForm::class);
         $detailForm->setItemRequestClass(ParkGridFieldDetailForm_ItemRequest::class);
+
+        //To setup GridField Column title
+        $dataColumns = $config->getComponentByType(GridFieldDataColumns::class);
+        $dataColumns->setDisplayFields([
+            'Title' => 'Title',
+            'Provider' => "Provider",
+            'hasPendingImage' => "Pending Image"
+        ]);
+
+        $dataColumns->setFieldFormatting([
+
+            "hasPendingImage" => function($value, $object){
+                if($value){
+                    $imageUrl = $object->PendingImage()->AbsoluteLink();
+                    return "<img src='{$imageUrl}' width='100' height='80' />";
+                }
+                return null;
+            }
+            
+        ]);
 
         return $field;
     }
