@@ -176,4 +176,24 @@ class Park extends DataObject
 
         return $fields;
     }
+
+
+    /**
+     * Event handler called after deleting from the database.
+     * 
+     * @uses DataExtension->onAfterDelete()
+     */
+    protected function onAfterDelete()
+    {
+        parent::onAfterDelete();
+        
+        //To remove image object after PARK deleted
+        if($this->hasPendingImage()){
+            $this->PendingImage()->delete();
+        }
+
+        if($this->hasLiveImage()){
+            $this->LiveImage()->delete();
+        }
+    }
 }

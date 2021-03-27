@@ -63,9 +63,15 @@ class ParkAdmin extends ModelAdmin
         //If showPendingList set TRUE, we need to filter
         //item has PendingImage
         if($this->showPendingList){
-            $list = $list->filterByCallback(function($item, $selflist){
-                return $item->hasPendingImage();
-            });
+
+            /**
+             * NOT WORKING???
+             */
+            // $list = $list->filterByCallback(function($item, $selflist){
+            //     return ($item->PendingImageID > 0);
+            // });
+            $list = $list->filter('PendingImageID:GreaterThan', 0);
+
         }
 
         return $list;
@@ -90,6 +96,7 @@ class ParkAdmin extends ModelAdmin
                 ->removeComponentsByType(GridFieldPrintButton::class);
         }
 
+        //To re-set ParkGridFieldDetailForm_ItemRequest
         $detailForm = $config->getComponentByType(GridFieldDetailForm::class);
         $detailForm->setItemRequestClass(ParkGridFieldDetailForm_ItemRequest::class);
 

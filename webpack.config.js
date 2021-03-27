@@ -34,11 +34,11 @@ module.exports = {
 
     module: {
         rules: [
-            {
-                test: /\.js$/,
-                enforce: "pre",
-                use: ["source-map-loader"],
-            },
+            // {
+            //     test: /\.js$/,
+            //     enforce: "pre",
+            //     use: ["source-map-loader"],
+            // },
             {
                 test: /\.(jsx|js)$/,
                 include: path.resolve(__dirname, src_path),
@@ -104,7 +104,7 @@ module.exports = {
         alias: {
             node_modules: 'node_modules',
         },
-        extensions: ['.js', '.jsx'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
 
     plugins: [
