@@ -1,3 +1,3 @@
 <div id="header">
-    <h1>$SiteConfig.Title</h1>
+    <h1>Somar Test by FANG.F (2021)</h1>
 </div>
