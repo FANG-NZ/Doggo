@@ -2,6 +2,7 @@
 
 namespace Doggo\Model;
 
+use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Assets\Image;
 use SilverStripe\Assets\Upload;
@@ -108,6 +109,29 @@ class Park extends DataObject
 
 
     /**
+     * Function is to do APPROVE pending image
+     */
+    public function approvePendingImage(){
+
+        //If there is NO pending image, just STOP 
+        if(!$this->hasPendingImage()){
+            return;
+        }
+
+        //To remove current Live Image,
+        //if there is LIVE IMAGE
+        if($this->hasLiveImage()){
+            $this->LiveImage()->delete();
+        }
+
+        //To update image ID
+        $this->LiveImageID = $this->PendingImageID;
+        $this->PendingImageID = 0;
+        $this->write();
+    }
+
+
+    /**
      * Function is to handle upload image into Pending Image
      */
     public function uploadPendingImage($imageFile){
@@ -144,7 +168,11 @@ class Park extends DataObject
         
         //To remove fields
         $fields->removeByName("IsToPurge");
-        $fields->removeByName("PendingImage");
+
+        //To remove pending image field, if it is NEW record
+        if($this->ID == 0){
+            $fields->removeByName("PendingImage");
+        }
 
         return $fields;
     }

@@ -52,7 +52,7 @@ class ParkController extends Controller{
                 'is_leash_on' => $item->isLeashOn(),
                 'leash_note' => $item->FeatureOnOffLeash,
                 'provider' => $item->getProvider(),
-                'live_image' => $item->hasLiveImage() ? $item->LiveImage()->AbsoluteLink : null,
+                'live_image' => $item->hasLiveImage() ? $item->LiveImage()->AbsoluteLink() : null,
                 'has_pending_image' => $item->hasPendingImage()
             ];
         }
