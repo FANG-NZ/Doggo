@@ -113,8 +113,6 @@ const MapDataSlice = createSlice({
             state.selectedPark.has_pending_image = true
         },
 
-
-
         /**
          * Function is to open ParkInfo
          * @param {*} state 
