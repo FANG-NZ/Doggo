@@ -4,8 +4,7 @@
   "description": "Somar Technical Test",
   "main": ".eslintrc.js",
   "scripts": {
-    "dev": "webpack server",
-    "watch": "webpack --config webpack.config.js --mode=development",
+    "dev": "webpack --config webpack.config.js --mode=development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
