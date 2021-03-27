@@ -133,6 +133,7 @@ class Park extends DataObject
         
         //To remove fields
         $fields->removeByName("IsToPurge");
+        $fields->removeByName("PendingImage");
 
         return $fields;
     }
