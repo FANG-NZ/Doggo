@@ -15,6 +15,8 @@ Somar Technical Test by FANG.F (2021)
 * `src/Admin/`: PHP (SilverStripe) code
    *  `src/Admin/ParkAdmin.php`: The admin panel layout for managing Park dataobject through CMS
    *  `src/Admin/Extensions/ParkGridFieldDetailForm_ItemRequest.php`: The subclass of GridFieldDetailForm_ItemRequest to add 'approve pending image' function into the edit form 
+   *  `src/Admin/Extensions/ParkGridFieldDetailForm.php`: To add new URL handler for createing park object according to subclass
+   *  `src/Admin/Extensions/ParkGridFieldAddNewButton.php`: To add new button for GridField
 * `src/APIController/`: PHP (SilverStripe) code
    * `src/APIController/ParkController.php`: The API controller to access Park dataobjects
 * `app/reactclient/`: Frontend code (Javascript, css, scss)
@@ -44,6 +46,8 @@ First of all I use two has_one replations in Park dataobject to hold images, one
 I create my own `ParkGridFieldDetailForm_ItemRequest` class to complete "APPROVE" function. Firstly we need to add one 'approve' button via `getFormActions` into bottom toolbar, and we also have to define the method to handle 'doApprove' request.
 
 Alos I customerise ParkAdmin to manage Park data more easier. There is one more `Doggo-Model-Park-Pending` into `managed_models`, so we can view only Parks with Pending Image by clicking tab, it is like filter function.
+
+To determine which dataobject will be created via CMS, I have to create two classes. One is `ParkGridFieldDetailForm` to append new variable into url and create dataobject according to this variable passed. `ParkGridFieldAddNewButton` is to append subclass into url for this case.
 
 ## Setup
 
