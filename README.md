@@ -1,6 +1,6 @@
 # Doggo
 
-Somar Technical Test by FANG.F (2021)
+SilverStripe + React/Redux by FANG.F (2021)
 
 ## What I have done
 
@@ -35,11 +35,11 @@ I just create my own API controller to handle the AJAX request instead of Silver
 
 ### Frontend 
 
-At the first I have to say I am beginner for Vue at moment, and I spent couple of hours to try running on my local, but didn't work properly. There could be issue with my local dev, so to complete work as developer, I have to use `React+Redux` to implement whole forntend like you did with Vue.
+I use `React+Redux` to implement whole forntend.
 
-Actually React is quite similar with Vue. The biggest difference between them is Vue using template to create frontend interface, but React using jsx. And Vue can do double-binding, React only does one-way binding. I can't say which one is better, but SilverStripe CMS is trying to use React instead of jQuery(jquery.entwine), on the other hand Vue works prefect with Laravel.
+Actually React is quite similar with Vue. The biggest difference between them is Vue using template to create frontend interface, but React using jsx. And Vue can do double-binding, React only does one-way binding.
 
-### Bonus task
+### Extra works
 
 First of all I use two has_one replations in Park dataobject to hold images, one is for LIVE another one is for PENDING. Once owner uploads image at the first time, it will be stored into PENDING image, when admin approved, it will be moved into LIVE and PENDING deleted after that.
 
